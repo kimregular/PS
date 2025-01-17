@@ -1,4 +1,4 @@
-package src.p2739;
+package src.BJ2739;
 
 import java.io.BufferedReader;
 import java.io.IOException;
