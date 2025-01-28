@@ -1,0 +1,105 @@
+package src.BJ10026;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Queue;
+
+public class Main {
+
+    public static void main(String[] args) {
+        new Main().run();
+    }
+
+    private void run() {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+
+            Solution s = new Solution();
+            System.out.println(s.solution(readInput(br)));
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private char[][] readInput(BufferedReader br) throws IOException {
+        int len = Integer.parseInt(br.readLine());
+        char[][] result = new char[len][len];
+        for (int i = 0; i < len; i++) {
+            result[i] = br.readLine().toCharArray();
+        }
+        return result;
+    }
+}
+
+class Solution {
+
+    private static final int[][] DIRECTIONS = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+
+    private char[][] field;
+    private StringBuilder result;
+
+    public String solution(char[][] field) {
+        init(field);
+        result.append(explore(false)).append(" ").append(explore(true));
+        return result.toString();
+    }
+
+    private void init(char[][] field) {
+        this.field = field;
+        this.result = new StringBuilder();
+    }
+
+    private int explore(boolean isColorBlind) {
+        int numOfField = 0;
+
+        if (isColorBlind) {
+            convertFieldRedToGreen();
+        }
+
+        boolean[][] isVisited = new boolean[field.length][field.length];
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field.length; j++) {
+                if(isVisited[i][j]) continue;
+                numOfField++;
+                BFS(isVisited, i, j);
+            }
+        }
+        return numOfField;
+    }
+
+    private void convertFieldRedToGreen() {
+        for (int i = 0; i < field.length; i++) {
+            for (int j = 0; j < field.length; j++) {
+                if(field[i][j] == 'R') field[i][j] = 'G';
+            }
+        }
+    }
+
+    private void BFS(boolean[][] isVisited, int x, int y) {
+        Queue<int[]> q = new ArrayDeque<>();
+        isVisited[x][y] = true;
+        q.offer(new int[]{x, y});
+
+        while (!q.isEmpty()) {
+            int[] cur = q.poll();
+
+            for (int[] direction : DIRECTIONS) {
+                int nx = cur[0] + direction[0];
+                int ny = cur[1] + direction[1];
+
+                if(isOutOfBound(nx, ny)) continue;
+                if(isVisited[nx][ny]) continue;
+                if(field[nx][ny] != field[x][y]) continue;
+
+                isVisited[nx][ny] = true;
+                q.offer(new int[]{nx, ny});
+            }
+        }
+    }
+
+    private boolean isOutOfBound(int x, int y) {
+        return x < 0 || x >= field.length || y < 0 || y >= field.length;
+    }
+}
