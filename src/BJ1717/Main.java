@@ -56,6 +56,7 @@ public class Main {
 class Solution {
 
 	private int[] people;
+	private int[] ranks;
 
 	public String solution(int numOfPeople, int[][] orders) {
 		init(numOfPeople);
@@ -74,8 +75,10 @@ class Solution {
 
 	private void init(int numOfPeople) {
 		this.people = new int[numOfPeople + 1];
+		this.ranks = new int[numOfPeople + 1];
 		for (int i = 0; i < people.length; i++) {
 			people[i] = i;
+			ranks[i] = 1;
 		}
 	}
 
@@ -83,7 +86,14 @@ class Solution {
 		int group1 = getGroup(target1);
 		int group2 = getGroup(target2);
 		if (group1 != group2) {
-			people[Math.max(group1, group2)] = Math.min(group1, group2);
+			if (ranks[group1] > ranks[group2]) {
+				people[group2] = group1;
+			} else if (ranks[group1] < ranks[group2]) {
+				people[group1] = group2;
+			} else {
+				people[group2] = group1;
+				ranks[group1]++;
+			}
 		}
 	}
 
