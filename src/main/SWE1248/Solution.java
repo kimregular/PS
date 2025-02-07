@@ -1,4 +1,4 @@
-package src.main.SWE1248;
+package main.SWE1248;
 
 import java.io.BufferedReader;
 import java.io.IOException;
