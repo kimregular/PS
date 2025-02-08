@@ -1,4 +1,4 @@
-package src.main.BJ15650;
+package main.BJ15650;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package src.main.SWE2068;
+package main.SWE2068;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package src.main.BJ11725;
+package main.BJ11725;
 
 import java.io.BufferedReader;
 import java.io.IOException;

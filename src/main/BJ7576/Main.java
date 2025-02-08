@@ -1,4 +1,4 @@
-package src.main.BJ7576;
+package main.BJ7576;
 
 import java.io.BufferedReader;
 import java.io.IOException;

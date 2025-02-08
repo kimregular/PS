@@ -1,4 +1,4 @@
-package src.main.BJ6593;
+package main.BJ6593;
 
 import java.io.BufferedReader;
 import java.io.IOException;

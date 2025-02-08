@@ -1,4 +1,4 @@
-package src.main.BJ1012;
+package main.BJ1012;
 
 import java.io.BufferedReader;
 import java.io.IOException;

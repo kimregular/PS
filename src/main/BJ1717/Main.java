@@ -1,4 +1,4 @@
-package src.main.BJ1717;
+package main.BJ1717;
 
 import java.io.BufferedReader;
 import java.io.IOException;

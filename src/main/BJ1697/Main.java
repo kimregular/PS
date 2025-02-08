@@ -1,4 +1,4 @@
-package src.main.BJ1697;
+package main.BJ1697;
 
 import java.io.BufferedReader;
 import java.io.IOException;

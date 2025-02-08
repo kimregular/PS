@@ -1,4 +1,4 @@
-package src.main.BJ2606;
+package main.BJ2606;
 
 import java.io.BufferedReader;
 import java.io.IOException;
