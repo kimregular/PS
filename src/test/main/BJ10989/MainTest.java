@@ -26,8 +26,8 @@ class MainTest {
 	@Test
 	void testFromFile() throws IOException {
 
-		String inputFilePath = "main/BJ10989/input.txt";
-		String expectedOutputFilePath = "main/BJ10989/output.txt";
+		String inputFilePath = "src/test/main/BJ10989/input.txt";
+		String expectedOutputFilePath = "src/test/main/BJ10989/output.txt";
 		// 입력 파일과 예상 출력 파일을 읽어온다.
 
 
