@@ -33,7 +33,6 @@ class Solution {
 	private int field;
 	private int select;
 	private int[] permutated;
-	private int[] used;
 	private StringBuilder answer;
 
 	public String solution(int[] input) {
@@ -46,7 +45,6 @@ class Solution {
 		this.field = input[0];
 		this.select = input[1];
 		this.permutated = new int[select];
-		this.used = new int[field + 1];
 		this.answer = new StringBuilder();
 	}
 
@@ -57,11 +55,8 @@ class Solution {
 		}
 
 		for (int i = 1; i <= field; i++) {
-			if(used[i] == select) continue;
-			used[i]++;
 			permutated[cnt] = i;
 			permutate(cnt + 1);
-			used[i]--;
 		}
 	}
 
