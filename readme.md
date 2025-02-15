@@ -8,7 +8,7 @@
 
 순서가 중요하므로 (1, 2) != (2, 1)
 
-$$ _{n}P_{r} = \frac{n!}{(n-r)!} $$
+$$_{n}P_{r} = \frac{n!}{(n-r)!}$$
 
 ```java
 class Solution {
