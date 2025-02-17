@@ -112,3 +112,59 @@ class Solution {
 	}
 }
 ```
+
+### 이분탐색 원소 압축
+
+```java
+class Solution {
+
+	private int[] field;
+
+	public String solution(int[] field, int[] targets) {
+		init(field);
+		StringBuilder result = new StringBuilder();
+		for (int target : targets) {
+			result.append(getUpperBound(target) - getLowerBound(target)).append(" ");
+		}
+
+		return result.toString();
+	}
+
+	private void init(int[] field) {
+		Arrays.sort(field);
+		this.field = field;
+	}
+
+	private int getUpperBound(int target) {
+		int lp = 0;
+		int rp = field.length - 1;
+
+		while (lp <= rp) {
+			int mid = (lp + rp) / 2;
+
+			if (field[mid] <= target) {
+				lp = mid + 1;
+			} else {
+				rp = mid - 1;
+			}
+		}
+		return lp - 1;
+	}
+
+	private int getLowerBound(int target) {
+		int lp = 0;
+		int rp = field.length - 1;
+
+		while (lp <= rp) {
+			int mid = (lp + rp) / 2;
+
+			if (field[mid] < target) {
+				lp = mid + 1;
+			} else {
+				rp = mid - 1;
+			}
+		}
+		return lp - 1;
+	}
+}
+```
