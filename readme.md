@@ -223,7 +223,7 @@ class Solution {
 
 		// 2. i - 1 교환자리의 값과 교환할 한단계 큰 수를 뒤에서부터 찾기
 		int j = field.length - 1;
-		while (input[i - 1] >= input[j]) --j;
+		while (field[i - 1] >= field[j]) --j;
 
 		// 3. i-1 자리와 j자리의 값 교환
 		swap(i - 1, j);
@@ -234,11 +234,11 @@ class Solution {
 
 		return true;
 	}
-}
 
-public void swap(int i, int j) {
-	int temp = field[i];
-	field[i] = field[j];
-	field[j] = temp;
+	public void swap(int i, int j) {
+		int temp = field[i];
+		field[i] = field[j];
+		field[j] = temp;
+	}
 }
 ```
