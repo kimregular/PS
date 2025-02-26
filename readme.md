@@ -242,3 +242,26 @@ class Solution {
 	}
 }
 ```
+
+### 마름모로 배열 탐색
+
+```java
+class Resolver {
+
+	public int resolve(int[][] field) {
+		int result = 0;
+		int center = field.length / 2;
+
+		for (int i = 0; i < field.length; i++) {
+			int start = Math.abs(center - i);
+			int end = field.length - start;
+
+			for (int j = start; j < end; j++) {
+				result += field[i][j];
+			}
+		}
+
+		return result;
+	}
+}
+```
