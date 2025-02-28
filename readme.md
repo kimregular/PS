@@ -1,16 +1,15 @@
 # 알고리즘 문제 풀이 레포
 
 <!-- TOC -->
-
 * [알고리즘 문제 풀이 레포](#알고리즘-문제-풀이-레포)
-    * [코드 스니펫](#코드-스니펫)
-        * [순열](#순열)
-        * [조합](#조합)
-        * [이분탐색 원소 압축](#이분탐색-원소-압축)
-        * [다음 순열](#다음-순열)
-        * [마름모로 배열 탐색](#마름모로-배열-탐색)
-        * [N-Queen](#n-queen)
-
+  * [코드 스니펫](#코드-스니펫)
+    * [순열](#순열)
+    * [조합](#조합)
+    * [이분탐색 원소 압축](#이분탐색-원소-압축)
+    * [다음 순열](#다음-순열)
+    * [마름모로 배열 탐색](#마름모로-배열-탐색)
+    * [N-Queen](#n-queen)
+    * [2차원 누적합](#2차원-누적합)
 <!-- TOC -->
 
 ## 코드 스니펫
@@ -323,4 +322,50 @@ class Solution {
 		return col[nextCol] || slash[rowNum + nextCol] || bSlash[rowNum - nextCol + N];
 	}
 }
+```
+
+### 2차원 누적합
+
+```java
+class Solution {
+
+	private int[][] accumulatedField;
+
+	public String solution(int[][] field, int[][] ranges) {
+		init(field);
+
+		StringBuilder result = new StringBuilder();
+		for (int[] range : ranges) {
+			result.append(getValueOf(range)).append("\n");
+		}
+		return result.toString().trim();
+	}
+
+	private void init(int[][] field) {
+		int n = field.length;
+		this.accumulatedField = new int[n + 1][n + 1];
+
+		for (int i = 1; i <= n; i++) {
+			for (int j = 1; j <= n; j++) {
+				accumulatedField[i][j] = field[i - 1][j - 1]
+						+ accumulatedField[i - 1][j]
+						+ accumulatedField[i][j - 1]
+						- accumulatedField[i - 1][j - 1];
+			}
+		}
+	}
+
+	private int getValueOf(int[] range) {
+		int startX = range[0];
+		int startY = range[1];
+		int endX = range[2];
+		int endY = range[3];
+
+		return accumulatedField[endX][endY]
+				- accumulatedField[startX - 1][endY]
+				- accumulatedField[endX][startY - 1]
+				+ accumulatedField[startX - 1][startY - 1];
+	}
+}
+
 ```
