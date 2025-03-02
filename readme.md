@@ -1,15 +1,17 @@
 # 알고리즘 문제 풀이 레포
 
 <!-- TOC -->
+
 * [알고리즘 문제 풀이 레포](#알고리즘-문제-풀이-레포)
-  * [코드 스니펫](#코드-스니펫)
-    * [순열](#순열)
-    * [조합](#조합)
-    * [이분탐색 원소 압축](#이분탐색-원소-압축)
-    * [다음 순열](#다음-순열)
-    * [마름모로 배열 탐색](#마름모로-배열-탐색)
-    * [N-Queen](#n-queen)
-    * [2차원 누적합](#2차원-누적합)
+    * [코드 스니펫](#코드-스니펫)
+        * [순열](#순열)
+        * [조합](#조합)
+        * [이분탐색 원소 압축](#이분탐색-원소-압축)
+        * [다음 순열](#다음-순열)
+        * [마름모로 배열 탐색](#마름모로-배열-탐색)
+        * [N-Queen](#n-queen)
+        * [2차원 누적합](#2차원-누적합)
+
 <!-- TOC -->
 
 ## 코드 스니펫
@@ -80,11 +82,9 @@ $$_nC_r = \frac{_nP_r}{r!}$$
 
 ```java
 class Solution {
-
 	private int field;
 	private int select;
 	private int[] combinated;
-	private boolean[] used;
 	private StringBuilder result;
 
 	public String solution(int[] input) {
@@ -97,7 +97,6 @@ class Solution {
 		this.field = input[0];
 		this.select = input[1];
 		this.combinated = new int[select];
-		this.used = new boolean[field];
 		this.result = new StringBuilder();
 	}
 
@@ -108,11 +107,8 @@ class Solution {
 		}
 
 		for (int i = start; i <= field; i++) {
-			if (used[cnt]) continue;
-			used[cnt] = true;
 			combinated[cnt] = i;
-			combinate(cnt + 1, i);
-			used[cnt] = false;
+			combinate(cnt + 1, i + 1); // i + 1을 넘겨서 중복을 방지해야 함
 		}
 	}
 
@@ -123,6 +119,7 @@ class Solution {
 		result.append("\n");
 	}
 }
+
 ```
 
 ### 이분탐색 원소 압축
