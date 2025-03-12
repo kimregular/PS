@@ -49,9 +49,9 @@ class Siever {
 		this.start = input[0];
 		this.limit = input[1];
 
-		for (int i = 2; i < field.length; i++) {
+		for (int i = 2; i <= Math.sqrt(limit); i++) {
 			if(field[i]) continue;
-			for (int j = i + i; j < field.length; j += i) {
+			for (int j = i * i; j <= limit; j += i) {
 				field[j] = true;
 			}
 		}
