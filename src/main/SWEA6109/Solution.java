@@ -1,4 +1,4 @@
-package main.SWE6109;
+package main.SWEA6109;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
