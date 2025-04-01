@@ -37,7 +37,7 @@ public class Main {
 
 class Solution {
 
-	private static final char WHITE = 0;
+	private static final int WHITE = 0;
 
 	private int[][] paper;
 	private int whiteCnt;
@@ -57,7 +57,7 @@ class Solution {
 
 	private void calc(int x, int y, int size) {
 		if (isOneColored(x, y, size)) {
-			makeCount(x, y);
+			makeCount(paper[x][y]);
 			return;
 		}
 
@@ -80,8 +80,7 @@ class Solution {
 		return true;
 	}
 
-	private void makeCount(int x, int y) {
-		int color = paper[x][y];
+	private void makeCount(int color) {
 		if (color == WHITE) {
 			whiteCnt++;
 		} else {
