@@ -5,6 +5,7 @@
   * [코드 스니펫](#코드-스니펫)
     * [순열](#순열)
     * [조합](#조합)
+      * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
     * [이분탐색 원소 압축](#이분탐색-원소-압축)
     * [다음 순열](#다음-순열)
     * [마름모로 배열 탐색](#마름모로-배열-탐색)
@@ -115,6 +116,41 @@ class Solution {
 			result.append(i).append(" ");
 		}
 		result.append("\n");
+	}
+}
+
+```
+
+#### 조합 계산하기(재귀 + dp)
+
+$$_nC_r = _{n-1}C_{r-1} + _{n-1}C_r$$
+
+`n개 중 나를 고르고(n - 1), 나머지 조합 구하기 (r - 1)` +
+`n개 중 나를 고르지 않고(n - 1), 나머지 조합 구하기(r)`
+
+* 나를 고르지 않은 경우에는 r이 줄어들지 않는다!
+
+```java
+class Solution {
+
+	private BigInteger[][] dp;
+
+	public BigInteger solution(int[] input) {
+		init(input);
+		return calc(input[0], input[1]);
+	}
+
+	private void init(int[] input) {
+		this.dp = new BigInteger[input[0] + 1][input[1] + 1];
+	}
+
+	private BigInteger calc(int n, int r) {
+		if (r == 0 || n == r) // nC0 이거나 nCn 이면 1이다.
+			return BigInteger.ONE;
+		if (dp[n][r] != null) return dp[n][r];
+		dp[n][r] = calc(n - 1, r - 1).add(calc(n - 1, r));
+		// nCr = n-1Cr-1 + n-1Cr
+		return dp[n][r];
 	}
 }
 
