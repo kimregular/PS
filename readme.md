@@ -4,10 +4,10 @@
 * [알고리즘 문제 풀이 레포](#알고리즘-문제-풀이-레포)
   * [코드 스니펫](#코드-스니펫)
     * [순열](#순열)
-    * [조합](#조합)
-      * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
-    * [이분탐색 원소 압축](#이분탐색-원소-압축)
     * [다음 순열](#다음-순열)
+    * [조합](#조합)
+    * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
+    * [이분탐색 원소 압축](#이분탐색-원소-압축)
     * [마름모로 배열 탐색](#마름모로-배열-탐색)
     * [N-Queen](#n-queen)
     * [2차원 누적합](#2차원-누적합)
@@ -21,7 +21,9 @@
 
 순서가 중요하므로 (1, 2) != (2, 1)
 
-$$_nP_r = \frac{n!}{(n-r)!}$$
+> $$_nP_r = \frac{n!}{(n-r)!}$$
+
+> $$_nP_r = n \times _{n-1}P_{r-1}$$
 
 ```java
 class Solution {
@@ -71,13 +73,87 @@ class Solution {
 }
 ```
 
+### 다음 순열
+
+> 지금 순열에서 사전 순으로 다음 순열을 생성한다.
+
+1. 배열을 오름차순으로 정렬
+2. 뒤쪽부터 탐색하며 교환위치(i - 1) 찾기(i : 꼭대기)
+3. 뒤쪽부터 탐색하며 교환위치(i - 1)와 교환할 큰 값 위치(j) 찾기
+4. 두 위치 값(i - 1, j) 교환
+5. 꼭대기위치부터 맨 뒤까지 오름차순 정렬
+
+활용하면 조합을 구할 수도 있다.
+
+```java
+import java.util.Arrays;
+
+class Solution {
+
+	int[] field;
+	StringBuilder result;
+
+	public String solution(int[] field) {
+		init(field);
+		Arrays.sort(field); // 정렬 필수!
+
+		do {
+			savePermutation();
+		} while (nextPermutate());
+	}
+
+	private void init(int[] field) {
+		this.field = field;
+		this.result = new StringBuilder();
+	}
+
+	private void savePermutation() {
+		for (int i : field) {
+			result.append(i).append(" ");
+		}
+		result.append("\n");
+	}
+
+	private boolean nextPermutate() {
+		// 현상태의 순열에서 사전식으로 다음 순열이 존재하면 true, 아니면 false
+
+		// 1. 뒤쪽부터 탐색하며 꼭대기(i) 찾기, 교환위치(i-1)을 찾기위해 실행
+		int i = field.length - 1;
+		while (i > 0 && field[i - 1] >= field[i])
+			--i;
+
+		if (i == 0) return false;
+		// 교환자리가 없다(가장 큰 순열 상태)
+
+		// 2. i - 1 교환자리의 값과 교환할 한단계 큰 수를 뒤에서부터 찾기
+		int j = field.length - 1;
+		while (field[i - 1] >= field[j]) --j;
+
+		// 3. i-1 자리와 j자리의 값 교환
+		swap(i - 1, j);
+
+		// 4. i - 1 자리의 한단계 큰수로 변화를 줬으니 i 꼭대기 위치부터 맨 뒤까지 가장 작은 수를 만듦(오름차순 정렬)
+		int k = field.length - 1;
+		while (i < k) swap(i++, k--);
+
+		return true;
+	}
+
+	public void swap(int i, int j) {
+		int temp = field[i];
+		field[i] = field[j];
+		field[j] = temp;
+	}
+}
+```
+
 ### 조합
 
 > 어떤 집합의 원소들을 순서 상관 없이 배열하는 것
 
 순서가 상관 없으므로 (1, 2) == (2, 1)
 
-$$_nC_r = \frac{_nP_r}{r!}$$
+$$_nC_r = \frac{_nP_r}{r!} = \frac{n!}{r!(n - r)!}$$
 
 ```java
 class Solution {
@@ -121,12 +197,13 @@ class Solution {
 
 ```
 
-#### 조합 계산하기(재귀 + dp)
+### 조합 계산하기(재귀 + dp)
+
 - 파스칼의 삼각형
 
 $$_nC_r = _{n-1}C_{r-1} + _{n-1}C_r$$
 
-`n개 중 나를 고르고(n - 1), 나머지 조합 구하기 (r - 1)` +
+> `n개 중 나를 고르고(n - 1), 나머지 조합 구하기 (r - 1)` +
 `n개 중 나를 고르지 않고(n - 1), 나머지 조합 구하기(r)`
 
 * 나를 고르지 않은 경우에는 r이 줄어들지 않는다!
@@ -209,80 +286,6 @@ class Solution {
 			}
 		}
 		return lp - 1;
-	}
-}
-```
-
-### 다음 순열
-
-> 지금 순열에서 사전 순으로 다음 순열을 생성한다.
-
-1. 배열을 오름차순으로 정렬
-2. 뒤쪽부터 탐색하며 교환위치(i - 1) 찾기(i : 꼭대기)
-3. 뒤쪽부터 탐색하며 교환위치(i - 1)와 교환할 큰 값 위치(j) 찾기
-4. 두 위치 값(i - 1, j) 교환
-5. 꼭대기위치부터 맨 뒤까지 오름차순 정렬
-
-활용하면 조합을 구할 수도 있다.
-
-```java
-import java.util.Arrays;
-
-class Solution {
-
-	int[] field;
-	StringBuilder result;
-
-	public String solution(int[] field) {
-		init(field);
-		Arrays.sort(field); // 정렬 필수!
-
-		do {
-			savePermutation();
-		} while (nextPermutate());
-	}
-
-	private void init(int[] field) {
-		this.field = field;
-		this.result = new StringBuilder();
-	}
-
-	private void savePermutation() {
-		for (int i : field) {
-			result.append(i).append(" ");
-		}
-		result.append("\n");
-	}
-
-	private boolean nextPermutate() {
-		// 현상태의 순열에서 사전식으로 다음 순열이 존재하면 true, 아니면 false
-
-		// 1. 뒤쪽부터 탐색하며 꼭대기(i) 찾기, 교환위치(i-1)을 찾기위해 실행
-		int i = field.length - 1;
-		while (i > 0 && field[i - 1] >= field[i])
-			--i;
-
-		if (i == 0) return false;
-		// 교환자리가 없다(가장 큰 순열 상태)
-
-		// 2. i - 1 교환자리의 값과 교환할 한단계 큰 수를 뒤에서부터 찾기
-		int j = field.length - 1;
-		while (field[i - 1] >= field[j]) --j;
-
-		// 3. i-1 자리와 j자리의 값 교환
-		swap(i - 1, j);
-
-		// 4. i - 1 자리의 한단계 큰수로 변화를 줬으니 i 꼭대기 위치부터 맨 뒤까지 가장 작은 수를 만듦(오름차순 정렬)
-		int k = field.length - 1;
-		while (i < k) swap(i++, k--);
-
-		return true;
-	}
-
-	public void swap(int i, int j) {
-		int temp = field[i];
-		field[i] = field[j];
-		field[j] = temp;
 	}
 }
 ```
