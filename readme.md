@@ -24,7 +24,7 @@
 
 > $$_nP_r = \frac{n!}{(n-r)!}$$
 
-> $$_nP_r = n \times _{n-1}P_{r-1}$$
+> $$ _nP_r = n \times _{n-1}P_{r-1} $$
 
 ```java
 class Solution {
