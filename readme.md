@@ -8,6 +8,7 @@
     * [이전 순열](#이전-순열)
     * [조합](#조합)
     * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
+    * [LIS](#lis)
     * [이분탐색 원소 압축](#이분탐색-원소-압축)
     * [마름모로 배열 탐색](#마름모로-배열-탐색)
     * [N-Queen](#n-queen)
@@ -294,6 +295,61 @@ class Solution {
 	}
 }
 
+```
+
+### LIS
+
+> 수열에서 항상 오름차순으로 증가하는 부분 수열 중에서 가장 긴 길이를 구하는 문제
+
+- 부분 수열은 연속되지 않아도 됨
+- 배열의 순서는 유지해야 함
+
+예시) [10, 20, 10, 30, 20, 50]
+
+가능한 증가 부분 수열 예:
+
+- [10, 20, 30, 50]
+- [10, 20, 50]
+- [10, 30, 50]
+
+이 중 가장 긴 건 [10, 20, 30, 50]이고, 길이 4
+
+시간복잡도 : $O(n^2)$ (개선가능)
+
+```java
+class Solution {
+
+	private int[] field;
+	private int[] dp;
+
+	public int solution(int[] field) {
+		init(field);
+		return calc();
+	}
+
+	private void init(int[] field) {
+		this.field = field;
+		this.dp = new int[field.length];
+	}
+
+	private int calc() {
+		int result = 0; // 최장증가부분수열의 길이
+		for (int i = 0; i < field.length; i++) {
+			dp[i] = 1;
+            // 자신만 끝에 새웠을 경우의 최장길이 1
+			for (int j = 0; j < i; j++) {
+				// i 보다 앞에 있는 모든 대상에 대해 탐색
+				if (field[j] < field[i] && dp[i] < dp[j] + 1) {
+                    // i 보다 앞에 있는 j의 값이 i 보다 작고
+                    // j 뒤에 i를 세우는 것이 더 최장을 만족한다면
+					dp[i] = dp[j] + 1;
+				}
+			}
+			result = Math.max(result, dp[i]);
+		}
+		return result;
+	}
+}
 ```
 
 ### 이분탐색 원소 압축
