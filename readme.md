@@ -6,6 +6,7 @@
     * [순열](#순열)
     * [다음 순열](#다음-순열)
     * [이전 순열](#이전-순열)
+    * [n번째 수열 구하기](#n번째-수열-구하기)
     * [조합](#조합)
     * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
     * [LIS](#lis)
@@ -183,17 +184,30 @@ class Solution {
 		this.field = field;
 	}
 
+	// 이전 순열을 만드는 핵심 로직
 	private boolean prevPermutation() {
 		int i = field.length - 1;
+
 		while (i > 0 && field[i - 1] <= field[i])
 			i--;
+		// 1. 뒤에서부터 처음으로 오름차순이 깨지는 지점 찾기
+
 		if (i == 0) return false;
+		// 2. 완전히 오름차순이면 (이미 첫 번째 순열이면) false 반환
+
 		int j = field.length - 1;
 		while (field[i - 1] <= field[j]) j--;
+		// 3. 뒤에서부터 field[i - 1]보다 작은 수를 찾아 스왑할 위치 j 결정
+
 		swap(i - 1, j);
+		// 4. i - 1과 j를 스왑
+
 		int k = field.length - 1;
 		while (i < k) swap(i++, k--);
+		// 5. i부터 끝가지를 뒤집어서 정렬(내림차순 -> 오름차순)
+
 		return true;
+		// 이전 순열 생성 완료
 	}
 
 	private void swap(int i, int j) {
@@ -207,6 +221,87 @@ class Solution {
 		for (int f : field)
 			result.append(f).append(" ");
 		return result.toString();
+	}
+}
+```
+
+### [n번째 수열 구하기](https://www.acmicpc.net/problem/9742)
+
+시간 복잡도 : $O(N^2)$
+
+> 1부터 N까지 숫자로 만들 수 있는 모든 순열을 사전 순으로 정렬했을 때, K 번째에
+> 해당하는 순열을 구하는 방법
+
+사전 순 순열은 팩토리얼을 이용한 자리수 계산으로 직접 구할 수 있다.
+
+N = 4, K = 9 라고 한다면
+
+- 전체 수열 수 : $4!$ = 24
+- 첫 자리에 올 수 있는 숫자 : [1, 2, 3, 4]
+- 각 숫자가 첫 자리에 올 때마다 남는 경우의 수 : $3!$ = 6
+- K = 9는 두 번째 그룹에 해당 (첫 자리는 2)
+
+```java
+class Solution {
+
+	public String solution(List<String> testCases) {
+		StringBuilder result = new StringBuilder();
+		for (String testCase : testCases) {
+			result.append(testCase).append(" = ").append(calc(testCase)).append("\n");
+		}
+		return result.toString();
+	}
+
+	private String calc(String testCase) {
+		String[] input = testCase.split(" ");
+		char[] field = input[0].toCharArray();
+		int n = Integer.parseInt(input[1]);
+		String permutation = getPermutationOf(field, n);
+		return permutation != null ? permutation : "No permutation";
+	}
+
+	// 사전순으로 정렬된 순열 중 n 번째 순열을 직접 계산
+	private String getPermutationOf(char[] field, int n) {
+		List<Character> chars = new ArrayList<>();
+		for (char c : field) chars.add(c);
+		// 문자들을 리스트로 변환
+
+		int total = factorial(chars.size());
+		// 전체 가능한 순열의 수 계산
+		if (n > total) return null;
+		// 범위 초과 시 null 반환
+
+		n--;
+		// 0-based index로 변환
+
+		StringBuilder result = new StringBuilder();
+
+		while (!chars.isEmpty()) {
+			// 각 자리에 올 문자를 선택하며 순열 구성
+			int size = chars.size();
+			int f = factorial(size - 1);
+			// 현재 자리 이후에 남은 문자들로 만들 수 있는 순열의 개수
+			// 그룹 크기
+			int index = n / f;
+			// 선택할 문자 인덱스
+
+			result.append(chars.get(index));
+			// 문자 추가
+			chars.remove(index);
+			// 선택한 문자는 제거
+
+			n %= f;
+			// 다음 자리에서 사용할 인덱스 갱신
+		}
+		return result.toString();
+	}
+
+	private int factorial(int size) {
+		int result = 1;
+		for (int i = 1; i <= size; i++) {
+			result *= i;
+		}
+		return result;
 	}
 }
 ```
@@ -392,7 +487,6 @@ dp 배열은 LIS를 그대로 유지하지는 않지만, 항상 가능한 가장
 - 작은 값일수록 이후에 더 많은 값이 이어질 수 있기 때문
 
 따라서 길이만 알고 싶은 경우에는 dp의 실제 내용은 신경쓰지 않아도 된다!
-
 
 ```java
 class Solution {
