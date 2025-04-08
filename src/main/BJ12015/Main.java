@@ -51,12 +51,13 @@ class Solution {
 	private int calc() {
 		int result = 0;
 		for (int i = 0; i < field.length; i++) {
+			// dp[0 ~ result) 중에서 field[i]가 들어갈 위치 찾기
 			int pos = Arrays.binarySearch(dp, 0, result, field[i]);
-			if(0 <= pos) continue;
 
-			int temp = Math.abs(pos) - 1;
-			dp[temp] = field[i];
-			if(temp == result) result++;
+			if (pos < 0) pos = -pos - 1; // 삽입 위치 복원
+			dp[pos] = field[i];
+
+			if (pos == result) result++; // 가장 끝에 붙는 경우만 길이 증가
 		}
 		return result;
 	}
