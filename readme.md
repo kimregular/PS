@@ -9,6 +9,7 @@
     * [조합](#조합)
     * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
     * [LIS](#lis)
+    * [개선된 LIS](#개선된-lis)
     * [이분탐색 원소 압축](#이분탐색-원소-압축)
     * [마름모로 배열 탐색](#마름모로-배열-탐색)
     * [N-Queen](#n-queen)
@@ -301,6 +302,8 @@ class Solution {
 
 > 수열에서 항상 오름차순으로 증가하는 부분 수열 중에서 가장 긴 길이를 구하는 문제
 
+시간복잡도 : $O(n^2)$ (개선가능)
+
 - 부분 수열은 연속되지 않아도 됨
 - 배열의 순서는 유지해야 함
 
@@ -313,8 +316,6 @@ class Solution {
 - [10, 30, 50]
 
 이 중 가장 긴 건 [10, 20, 30, 50]이고, 길이 4
-
-시간복잡도 : $O(n^2)$ (개선가능)
 
 ```java
 class Solution {
@@ -336,16 +337,93 @@ class Solution {
 		int result = 0; // 최장증가부분수열의 길이
 		for (int i = 0; i < field.length; i++) {
 			dp[i] = 1;
-            // 자신만 끝에 새웠을 경우의 최장길이 1
+			// 자신만 끝에 새웠을 경우의 최장길이 1
 			for (int j = 0; j < i; j++) {
 				// i 보다 앞에 있는 모든 대상에 대해 탐색
 				if (field[j] < field[i] && dp[i] < dp[j] + 1) {
-                    // i 보다 앞에 있는 j의 값이 i 보다 작고
-                    // j 뒤에 i를 세우는 것이 더 최장을 만족한다면
+					// i 보다 앞에 있는 j의 값이 i 보다 작고
+					// j 뒤에 i를 세우는 것이 더 최장을 만족한다면
 					dp[i] = dp[j] + 1;
 				}
 			}
 			result = Math.max(result, dp[i]);
+		}
+		return result;
+	}
+}
+```
+
+### 개선된 LIS
+
+시간복잡도 : $O(n \log n)$
+
+길이는 구하되 실제 수열은 구하지 않는다는 아이디어
+
+- `dp[i]` : 길이가 `i + 1`인 증가 부분 수열의 마지막 값 중 최소값
+- dp 배열은 실제 LIS는 아니지만, 길이를 구하는 데에만 사용됨
+- 주어진 수열 arr의 각 `arr[i]`에 대해 dp에서 이 값이 들어갈 수 있는
+  위치를 이진탐색해서 삽입
+
+예시) arr = [10, 20, 10, 30, 20, 50]
+
+초기 상태 :
+
+- dp = []
+- length = 0;
+
+1. 10
+    - `dp = [10]`, length = 1
+2. 20
+    - `dp = [10, 20]`, length = 2
+3. 10
+    - dp = [10, 20] -> 10은 dp[0]과 교체됨(같거나 더 작으면
+      덮어쓰기)
+    - dp = [10, 20]
+4. 30
+    - dp = [10, 20, 30], length = 3
+5. 20
+    - dp = [10, 20, 30] -> 20은 dp[1]과 교체됨
+    - dp = [10, 20, 30]
+6. 50
+    - dp = [10, 20, 30, 50], length = 4
+
+dp 배열은 LIS를 그대로 유지하지는 않지만, 항상 가능한 가장 작은 값을 유지한다.
+
+- 작은 값일수록 이후에 더 많은 값이 이어질 수 있기 때문
+
+따라서 길이만 알고 싶은 경우에는 dp의 실제 내용은 신경쓰지 않아도 된다!
+
+
+```java
+class Solution {
+
+	private int[] field;
+	private int[] dp;
+
+	public int solution(int[] field) {
+		init(field);
+		return calc();
+	}
+
+	private void init(int[] field) {
+		this.field = field;
+		this.dp = new int[field.length];
+	}
+
+	private int calc() {
+		int result = 0;
+		for (int i = 0; i < field.length; i++) {
+			// dp[0 ~ result) 중에서 field[i]가 들어갈 위치 찾기
+			int pos = Arrays.binarySearch(dp, 0, result, field[i]);
+			// int[] arr, int fromIndex, int toIndex, int key
+			// 배열 arr의 fromIndex 부터 toIndex 사이에서 key 찾기
+			// 찾으려는 key 없으면 '-키가 삽입될 위치 - 1' 반환
+			if (pos < 0)
+				pos = -pos - 1; // 삽입 위치 복원
+			dp[pos] = field[i];
+
+			if (pos == result)
+				result++; // 가장 끝에 붙는 경우만 길이 증가
 		}
 		return result;
 	}
