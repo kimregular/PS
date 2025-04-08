@@ -1,20 +1,22 @@
 # 알고리즘 문제 풀이 레포
 
 <!-- TOC -->
+
 * [알고리즘 문제 풀이 레포](#알고리즘-문제-풀이-레포)
-  * [코드 스니펫](#코드-스니펫)
-    * [순열](#순열)
-    * [다음 순열](#다음-순열)
-    * [이전 순열](#이전-순열)
-    * [n번째 수열 구하기](#n번째-수열-구하기)
-    * [조합](#조합)
-    * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
-    * [LIS](#lis)
-    * [개선된 LIS](#개선된-lis)
-    * [이분탐색 원소 압축](#이분탐색-원소-압축)
-    * [마름모로 배열 탐색](#마름모로-배열-탐색)
-    * [N-Queen](#n-queen)
-    * [2차원 누적합](#2차원-누적합)
+    * [코드 스니펫](#코드-스니펫)
+        * [순열](#순열)
+        * [다음 순열](#다음-순열)
+        * [이전 순열](#이전-순열)
+        * [n번째 수열 구하기](#n번째-수열-구하기)
+        * [조합](#조합)
+        * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
+        * [LIS](#lis)
+        * [개선된 LIS](#개선된-lis)
+        * [이분탐색 원소 압축](#이분탐색-원소-압축)
+        * [마름모로 배열 탐색](#마름모로-배열-탐색)
+        * [N-Queen](#n-queen)
+        * [2차원 누적합](#2차원-누적합)
+
 <!-- TOC -->
 
 ## 코드 스니펫
@@ -299,6 +301,63 @@ class Solution {
 	private int factorial(int size) {
 		int result = 1;
 		for (int i = 1; i <= size; i++) {
+			result *= i;
+		}
+		return result;
+	}
+}
+```
+
+### [주어진 순열이 몇 번째 순열인지 계산하기](https://www.acmicpc.net/problem/1722)
+
+시간 복잡도 : $O(N^2)$
+
+- 각 자릿수마다 앞에 올 수 있는 더 작은 수의 개수를 계산
+- 그 수보다 작은 값이 앞에 올 수 있는 경우의 수는
+  `(작은 개수) * (남은 자리  순열 수)`
+- 모든 자리에 계산을 하고 이를 누적해서 더하면 순열의 순서가 구해짐
+
+```java
+
+class Solution {
+
+	private int[] field;
+
+	public int solution(int[] field) {
+		init(field);
+		return getPermutationIndex();
+	}
+
+	private void init(int[] field) {
+		this.field = field;
+	}
+
+	private int getPermutationIndex() {
+		List<Integer> nums = new ArrayList<>();
+
+		for (int i = 1; i <= field.length; i++)
+			nums.add(i);
+
+		int index = 1; // 1-based index
+
+		for (int i = 0; i < field.length; i++) {
+			int cur = field[i];
+
+			for (int num : nums) {
+				// 현재 숫자보다 작은 수가 남은 리스트에 몇개 남았는지 확인
+				if (num == cur) break;
+				index += factorial(n - i - 1);
+				// 그 숫자를 첫 자리에 둘 때 나오는 경우의 수 추가
+			}
+			nums.remove(i); // 사용한 숫자 제거
+		}
+
+		return index;
+	}
+
+	private int factorial(int num) {
+		int result = 1;
+		for (int i = 1; i <= num; i++) {
 			result *= i;
 		}
 		return result;
