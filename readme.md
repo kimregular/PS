@@ -22,6 +22,8 @@
 
 ### 순열
 
+시간 복잡도 : $O(N!)$
+
 > 어떤 집합의 원소들을 특정한 순서대로 배열하는 것
 
 순서가 중요하므로 (1, 2) != (2, 1)
@@ -34,15 +36,28 @@
 class Solution {
 
 	private int field;
+	// 전체 원소 수
 	private int select;
+	// 선택할 원소 수
 	private boolean[] used;
+	// 원소 사용 여부 체크
 	private int[] permutated;
+	// 현재 순열 저장
 	private StringBuilder answer;
+	// 결과 누적
 
 	public String solution(int[] input) {
-		init(input);
-		getPermutations(0);
-		return answer.toString();
+		init(input); // 초기화
+		getPermutations(0); // 순열 생성
+		return answer.toString(); // 생성된 순열 출력
+	}
+
+	private void init(int[] input) {
+		this.field = input[0];
+		this.select = input[1];
+		this.used = new boolean[field + 1];
+		this.permutated = new int[select];
+		this.answer = new StringBuilder();
 	}
 
 	public void getPermutations(int cnt) {
@@ -53,19 +68,13 @@ class Solution {
 
 		for (int i = 1; i <= field; i++) {
 			if (used[i]) continue;
-			used[i] = true;
-			permutated[cnt] = i;
-			getPermutations(cnt + 1);
-			used[i] = false;
-		}
-	}
+			// 이미 사용된 숫자는 스킵
 
-	private void init(int[] input) {
-		this.field = input[0];
-		this.select = input[1];
-		this.used = new boolean[field + 1];
-		this.permutated = new int[select];
-		this.answer = new StringBuilder();
+			used[i] = true; // 사용 체크
+			permutated[cnt] = i; // 현재 자리 할당
+			getPermutations(cnt + 1); // 다음 자리 재귀 호출
+			used[i] = false; // 백트래킹
+		}
 	}
 
 	private String savePermutated() {
@@ -79,6 +88,8 @@ class Solution {
 ```
 
 ### [다음 순열  ](https://www.acmicpc.net/problem/10972)
+
+시간 복잡도 : $O(N)$
 
 > 지금 순열에서 사전 순으로 다음 순열을 생성한다.
 
@@ -119,16 +130,21 @@ class Solution {
 
 		while (i > 0 && field[i - 1] >= field[i])
 			--i;
+		// 1. 뒤에서부터 처음으로 감소하는 지점 찾기
 
 		if (i == 0) return false;
+		// 2. 마지막 순열이면 false 출력
 
 		int j = field.length - 1;
 		while (field[i - 1] >= field[j]) --j;
+		// 3. i - 1 보다 큰 값 중 가장 마지막 값 찾기
 
 		swap(i - 1, j);
+		// 4. 스왑
 
 		int k = field.length - 1;
 		while (i < k) swap(i++, k--);
+		// i 부터 끝까지 뒤집기
 
 		return true;
 	}
@@ -150,6 +166,8 @@ class Solution {
 ```
 
 ### [이전 순열](https://www.acmicpc.net/problem/10973)
+
+시간 복잡도 : $O(N)$
 
 > 지금 순열에서 사전 순으로 이전 순열을 생성한다.
 
