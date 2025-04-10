@@ -1,21 +1,24 @@
 # 알고리즘 문제 풀이 레포
 
 <!-- TOC -->
+
 * [알고리즘 문제 풀이 레포](#알고리즘-문제-풀이-레포)
-  * [코드 스니펫](#코드-스니펫)
-    * [순열](#순열)
-    * [다음 순열](#다음-순열)
-    * [이전 순열](#이전-순열)
-    * [n번째 수열 구하기](#n번째-수열-구하기)
-    * [주어진 순열이 몇 번째 순열인지 계산하기](#주어진-순열이-몇-번째-순열인지-계산하기)
-    * [조합](#조합)
-    * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
-    * [LIS](#lis)
-    * [개선된 LIS](#개선된-lis)
-    * [이분탐색 원소 압축](#이분탐색-원소-압축)
-    * [마름모로 배열 탐색](#마름모로-배열-탐색)
-    * [N-Queen](#n-queen)
-    * [2차원 누적합](#2차원-누적합)
+    * [코드 스니펫](#코드-스니펫)
+        * [순열](#순열)
+        * [다음 순열](#다음-순열)
+        * [이전 순열](#이전-순열)
+        * [n번째 수열 구하기](#n번째-수열-구하기)
+        * [주어진 순열이 몇 번째 순열인지 계산하기](#주어진-순열이-몇-번째-순열인지-계산하기)
+        * [조합](#조합)
+        * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
+        * [LIS](#lis)
+        * [개선된 LIS](#개선된-lis)
+        * [1-0 배낭문제](#1-0-배낭문제)
+        * [이분탐색 원소 압축](#이분탐색-원소-압축)
+        * [마름모로 배열 탐색](#마름모로-배열-탐색)
+        * [N-Queen](#n-queen)
+        * [2차원 누적합](#2차원-누적합)
+
 <!-- TOC -->
 
 ## 코드 스니펫
@@ -596,6 +599,110 @@ class Solution {
 				result++; // 가장 끝에 붙는 경우만 길이 증가
 		}
 		return result;
+	}
+}
+```
+
+### [0-1 배낭문제](https://www.acmicpc.net/problem/12865)
+
+시간 복잡도 : $O(N \times K)$
+공간 복잡도 : $O(N \times K$
+
+- N : 물건 수
+- K : 최대 무게 제한
+
+
+- N개의 물건이 주어지고, 각각의 물건은 무게와 가치를 갖는다.
+- 배낭은 최대 무게 K까지만 담을 수 있다.
+- 각 물건은 한 번만 선택 가능하다. (0-1 배낭문제)
+- 무게 제한을 넘지 않으면서, 총 가치를 최대로 만들었을 때의 값을 구하자.
+
+1-0 배낭문제의 특징
+
+- 각 물건마다 배낭에 넣는 경우와 안 넣는 경우의 두가지 선택지가 있다.
+- 물건을 분해하거나 나눌 수 없다.
+
+```java
+class Solution {
+
+	private int[][] things;
+	// 물건 정보 배열
+	// [무게, 가치]
+	private int[][] dp;
+	// dp[i][w] = i 번째 물건까지 고려했을 때, w 무게 한도 내 최대 가치
+
+	public int solution(int limit, int[][] things) {
+		init(limit, things); // 초기화
+		return calc(things.length - 1, limit);
+	}
+
+	private void init(int limit, int[][] things) {
+		this.things = things;
+		this.dp = new int[things.length + 1][limit + 1];
+	}
+
+	// idx 번째 물건까지 고려하고, 현재 배낭에 weight 만큼의 무게 여유가 있을 때의 최대 가치 계산
+	private int calc(int idx, int weight) {
+		if (idx < 0 || weight < 0) return 0;
+		// 물건이 더 이상 없으면 더 고려할 게 없으므로 0 반환
+		if (dp[idx][weight] != 0)
+			return dp[idx][weight];
+
+		if (things[idx][0] > weight) {
+			// 현재 물건이 무게가 남은 무게보다 크다면, 이 물건은 넣을 수 없음
+			dp[idx][weight] = calc(idx - 1, weight);
+			// 이전 물건들만 고려
+		} else {
+			dp[idx][weight] = Math.max(calc(idx - 1, weight), things[idx][1] + calc(idx - 1, weight - things[idx][0]));
+			// 물건을 넣지 않은 경우 vs 물건을 넣은 경우 중 더 큰 가치 선택
+		}
+		return dp[idx][weight];
+		// 계산된 결과 저장 및 반환
+	}
+}
+```
+
+### 개선된 0-1 배낭문제
+
+시간 복잡도 : $O(N \times K)$
+공간 복잡도 : $O(K)$
+
+- N : 물건 수
+- K : 최대 무게 제한
+
+```java
+class Solution {
+
+	private int[][] things;
+	// 물건 저장 배열
+    // [무게, 가치]
+	private int[] dp;
+	// dp[i] = 무게 i까지 넣었을 때 최대 가치
+
+	public int solution(int limit, int[][] things) {
+		init(limit, things); // 초기화
+		return calc(limit);
+	}
+
+	private void init(int limit, int[][] things) {
+		this.things = things;
+		this.dp = new int[limit + 1];
+	}
+
+	private int calc(int weight) {
+		for (int i = 0; i < things.length; i++) {
+			// 모든 물건 하나씩 처리
+			for (int j = weight; j >= things[i][0]; j--) {
+				// 배낭 무게 제한에서 현재 물건의 무게 이상부터 시작해서 0으로 감소
+                // 역순으로 탐색해야 같은 물건을 중복해서 선택하지 않음
+				dp[j] = Math.max(dp[j], dp[j - things[i][0]] + things[i][1]);
+				// 현재 무게 j에서의 최대 가치는 :
+                // 1. 이전 값 그대로 두기
+                // 2. 현재 물건을 넣고, 남은 무게의 최적해
+                // 둘 중 큰 값 선택
+			}
+		}
+		return dp[weight];
 	}
 }
 ```
