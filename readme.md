@@ -2,27 +2,26 @@
 
 <!-- TOC -->
 * [알고리즘 문제 풀이 레포](#알고리즘-문제-풀이-레포)
-  * [코드 스니펫](#코드-스니펫)
-    * [순열](#순열)
-    * [다음 순열](#다음-순열)
-    * [이전 순열](#이전-순열)
-    * [n번째 수열 구하기](#n번째-수열-구하기)
-    * [주어진 순열이 몇 번째 순열인지 계산하기](#주어진-순열이-몇-번째-순열인지-계산하기)
-    * [조합](#조합)
-    * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
-    * [LIS](#lis)
-    * [개선된 LIS](#개선된-lis)
-    * [0-1 배낭문제](#0-1-배낭문제)
-    * [개선된 0-1 배낭문제](#개선된-0-1-배낭문제)
-    * [이분탐색 원소 압축](#이분탐색-원소-압축)
-    * [마름모로 배열 탐색](#마름모로-배열-탐색)
-    * [N-Queen](#n-queen)
-    * [2차원 누적합](#2차원-누적합)
+  * [순열](#순열)
+  * [다음 순열](#다음-순열)
+  * [이전 순열](#이전-순열)
+  * [n번째 수열 구하기](#n번째-수열-구하기)
+  * [주어진 순열이 몇 번째 순열인지 계산하기](#주어진-순열이-몇-번째-순열인지-계산하기)
+  * [조합](#조합)
+  * [조합 계산하기(재귀 + dp)](#조합-계산하기재귀--dp)
+  * [LIS](#lis)
+  * [개선된 LIS](#개선된-lis)
+  * [0-1 배낭문제](#0-1-배낭문제)
+  * [개선된 0-1 배낭문제](#개선된-0-1-배낭문제)
+  * [이분탐색 원소 압축](#이분탐색-원소-압축)
+  * [마름모로 배열 탐색](#마름모로-배열-탐색)
+  * [N-Queen](#n-queen)
+  * [2차원 누적합](#2차원-누적합)
+  * [크루스칼](#크루스칼)
+  * [프림](#프림)
 <!-- TOC -->
 
-## 코드 스니펫
-
-### 순열
+## 순열
 
 시간 복잡도 : $O(N!)$
 
@@ -89,7 +88,7 @@ class Solution {
 }
 ```
 
-### [다음 순열  ](https://www.acmicpc.net/problem/10972)
+## [다음 순열  ](https://www.acmicpc.net/problem/10972)
 
 시간 복잡도 : $O(N)$
 
@@ -167,7 +166,7 @@ class Solution {
 }
 ```
 
-### [이전 순열](https://www.acmicpc.net/problem/10973)
+## [이전 순열](https://www.acmicpc.net/problem/10973)
 
 시간 복잡도 : $O(N)$
 
@@ -246,7 +245,7 @@ class Solution {
 }
 ```
 
-### [n번째 수열 구하기](https://www.acmicpc.net/problem/9742)
+## [n번째 수열 구하기](https://www.acmicpc.net/problem/9742)
 
 시간 복잡도 : $O(N^2)$
 
@@ -327,7 +326,7 @@ class Solution {
 }
 ```
 
-### [주어진 순열이 몇 번째 순열인지 계산하기](https://www.acmicpc.net/problem/1722)
+## [주어진 순열이 몇 번째 순열인지 계산하기](https://www.acmicpc.net/problem/1722)
 
 시간 복잡도 : $O(N^2)$
 
@@ -384,7 +383,7 @@ class Solution {
 }
 ```
 
-### 조합
+## 조합
 
 > 어떤 집합의 원소들을 순서 상관 없이 배열하는 것
 
@@ -434,7 +433,7 @@ class Solution {
 
 ```
 
-### 조합 계산하기(재귀 + dp)
+## 조합 계산하기(재귀 + dp)
 
 - 파스칼의 삼각형
 
@@ -471,7 +470,7 @@ class Solution {
 
 ```
 
-### LIS
+## LIS
 
 > 수열에서 항상 오름차순으로 증가하는 부분 수열 중에서 가장 긴 길이를 구하는 문제
 
@@ -526,7 +525,7 @@ class Solution {
 }
 ```
 
-### 개선된 LIS
+## 개선된 LIS
 
 시간복잡도 : $O(n \log n)$
 
@@ -602,7 +601,7 @@ class Solution {
 }
 ```
 
-### [0-1 배낭문제](https://www.acmicpc.net/problem/12865)
+## [0-1 배낭문제](https://www.acmicpc.net/problem/12865)
 
 시간 복잡도 : $O(N \times K)$
 공간 복잡도 : $O(N \times K$
@@ -661,7 +660,7 @@ class Solution {
 }
 ```
 
-### 개선된 0-1 배낭문제
+## 개선된 0-1 배낭문제
 
 시간 복잡도 : $O(N \times K)$
 공간 복잡도 : $O(K)$
@@ -706,7 +705,7 @@ class Solution {
 }
 ```
 
-### 이분탐색 원소 압축
+## 이분탐색 원소 압축
 
 ```java
 class Solution {
@@ -762,7 +761,7 @@ class Solution {
 }
 ```
 
-### 마름모로 배열 탐색
+## 마름모로 배열 탐색
 
 ```java
 class Resolver {
@@ -785,7 +784,7 @@ class Resolver {
 }
 ```
 
-### N-Queen
+## N-Queen
 
 ```java
 class Solution {
@@ -831,7 +830,7 @@ class Solution {
 }
 ```
 
-### 2차원 누적합
+## 2차원 누적합
 
 ```java
 class Solution {
@@ -875,4 +874,158 @@ class Solution {
 	}
 }
 
+```
+
+## [크루스칼](https://www.acmicpc.net/problem/1197)
+
+시간 복잡도 : $O(E log {E})$ (E는 간선 수)\
+간선 중심(greedy)
+
+1. 간선을 가중치  오름차순으로 정렬
+2. 사이클이 생기지 않으면 MST에 추가(Union-Find)
+
+장점
+- 간선 수가 적은 희소 그래프에 유리
+
+단점
+- 간선 정렬 및 Union-Find 관리 필요
+
+```java
+class Solution {
+
+    private int[] parent;
+    private PriorityQueue<int[]> pq;
+    private long totalWeight;
+
+    public long solution(int numOfNodes, int[][] infos) {
+        init(numOfNodes, infos);
+        kruskal(numOfNodes);
+        return totalWeight;
+    }
+
+    private void init(int numOfNodes, int[][] infos) {
+        parent = new int[numOfNodes + 1];
+        for (int i = 0; i <= numOfNodes; i++) {
+            parent[i] = i;
+        }
+
+        pq = new PriorityQueue<>(Comparator.comparingInt(e -> e[2]));
+        for (int[] info : infos) {
+            pq.offer(info);
+        }
+
+        totalWeight = 0;
+    }
+
+    private void kruskal(int numOfNodes) {
+        int edgeCount = 0;
+
+        while (!pq.isEmpty() && edgeCount < numOfNodes - 1) {
+            int[] edge = pq.poll();
+            int u = edge[0];
+            int v = edge[1];
+            int w = edge[2];
+
+            if (find(u) != find(v)) {
+                union(u, v);
+                totalWeight += w;
+                edgeCount++;
+            }
+        }
+    }
+
+    private int find(int x) {
+        if (x != parent[x]) parent[x] = find(parent[x]);
+        return parent[x];
+    }
+
+    private void union(int a, int b) {
+        int rootA = find(a);
+        int rootB = find(b);
+        if (rootA != rootB) parent[rootB] = rootA;
+    }
+}
+```
+
+## 프림
+시간 복잡도 : $O(E log{V})$
+정점 중심(greedy)
+
+1. 임의의 정점에서 시작
+2. 연결된 간선 중 최소 가중치 간선으로 확장
+
+장점
+- 밀집 그래프에서 효율적
+
+단점
+- 간선 수가 많으면 큐 관리 비용 증가
+
+```java
+class Solution {
+
+	private List<List<Edge>> adj;
+	private boolean[] visited;
+	private PriorityQueue<Edge> pq;
+	private int numOfNodes;
+
+	public long solution(int numOfNodes, List<Edge> edgeList) {
+		init(numOfNodes, edgeList);
+		return calc();
+	}
+
+	private void init(int numOfNodes, List<Edge> edgeList) {
+		this.numOfNodes = numOfNodes;
+		adj = new ArrayList<>();
+		for (int i = 0; i <= numOfNodes; i++) adj.add(new ArrayList<>());
+
+		for (Edge e : edgeList) {
+			adj.get(e.u).add(new Edge(e.v, e.weight));
+			adj.get(e.v).add(new Edge(e.u, e.weight));
+		}
+
+		visited = new boolean[numOfNodes + 1];
+		pq = new PriorityQueue<>();
+		pq.offer(new Edge(1, 0)); // 시작 노드 1번
+	}
+
+	private long calc() {
+		long totalWeight = 0;
+
+		while (!pq.isEmpty()) {
+			Edge cur = pq.poll();
+			int node = cur.to;
+			int cost = cur.weight;
+
+			if (visited[node]) continue;
+			visited[node] = true;
+			totalWeight += cost;
+
+			for (Edge next : adj.get(node)) {
+				if (!visited[next.to]) pq.offer(next);
+			}
+		}
+
+		return totalWeight;
+	}
+
+	private static class Edge implements Comparable<Edge> {
+		int u, to, weight;
+
+		public Edge(int to, int weight) {
+			this.to = to;
+			this.weight = weight;
+		}
+
+		public Edge(int u, int to, int weight) {
+			this.u = u;
+			this.to = to;
+			this.weight = weight;
+		}
+
+		@Override
+		public int compareTo(Edge other) {
+			return Integer.compare(this.weight, other.weight);
+		}
+	}
+}
 ```
