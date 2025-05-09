@@ -49,6 +49,10 @@ class Solution {
 		for (int i = 0; i < result.length; i++) {
 			result[i] = field[targets[i]];
 		}
+
+		target: for (int i = 0; i < targets.length; i++) {
+			
+		}
 		return result;
 	}
 
