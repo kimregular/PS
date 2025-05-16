@@ -65,7 +65,6 @@ class Solution {
     public int solution(int numOfNodes, int[][] edges) {
         init(numOfNodes, edges);
         calc();
-        System.out.println(Arrays.toString(dist));
         return dist[numOfNodes];
     }
 
