@@ -77,6 +77,7 @@ class Solution {
             visited[i] = true;
             DFS(0, i);
             visited[i] = false;
+            if(flag) break;
         }
         return flag;
     }
