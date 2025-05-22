@@ -74,6 +74,7 @@ class Solution {
     }
 
     private void calc() {
+        visited[field.length - 1][0] = true;
         DFS(field.length - 1, 0, 1);
     }
 
