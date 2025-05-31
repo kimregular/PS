@@ -17,7 +17,7 @@ public class Main {
     }
 
     private Input readInput() {
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(System.in))) {
 
             StringTokenizer st = new StringTokenizer(br.readLine());
             int n = Integer.parseInt(st.nextToken());
@@ -26,7 +26,7 @@ public class Main {
 
             return new Input(n, r, c);
 
-        }catch(IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException();
         }
     }
@@ -53,24 +53,20 @@ class Solution {
     }
 
     private int calc(int n, int r, int c, int cnt) {
-        if(n == 1) {
+        if (n == 1) {
             return cnt;
         }
 
         int half = n / 2;
         int area = half * half;
 
-        if(r < half && c < half) {
-            // 2
+        if (r < half && c < half) { // 좌상 (2사분면)
             return calc(half, r, c, cnt);
-        } else if (r < half && c >= half) {
-            // 1
+        } else if (r < half && c >= half) { // 우상 (1사분면)
             return calc(half, r, c - half, cnt + area);
-        } else if (r >= half && c < half) {
-            // 3
+        } else if (r >= half && c < half) { // 좌하 (3사분면)
             return calc(half, r - half, c, cnt + 2 * area);
-        } else {
-            // 4
+        } else { // 우하 (4사분면)
             return calc(half, r - half, c - half, cnt + 3 * area);
         }
     }
