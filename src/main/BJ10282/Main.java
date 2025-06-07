@@ -111,7 +111,7 @@ class Solution {
 
                 int nextWeight = dist[curNode] + weight;
 
-                if(dist[nextNode] < nextWeight) continue;
+                if(dist[nextNode] <= nextWeight) continue;
                 dist[nextNode] = nextWeight;
                 pq.offer(new int[] {nextNode, nextWeight});
             }
