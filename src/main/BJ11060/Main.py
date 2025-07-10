@@ -18,7 +18,7 @@ visited[0] = True
 while q:
     location, step = q.popleft()
 
-    if location is len(field) - 1:
+    if location == len(field) - 1:
         print(step)
         break
     
